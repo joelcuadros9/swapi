@@ -3,7 +3,21 @@ const swapi = require('swapi-node');
 
 exports.findVehicleAll = function (req, res) {
     swapi.getVehicle().then((result) => {
-        res.send(result.results);
+        const vehiculo = new Object();
+        const listaVehiculos = [];
+        result.results.forEach(element => {
+          vehiculo.nombre = element.name;
+          vehiculo.modelo = element.model;
+          vehiculo.fabricante = element.manufacturer;
+          vehiculo.costo_creditos = element.cost_in_credits;
+          vehiculo.tripulacion = element.crew;
+          vehiculo.pasajeros = element.passengers;
+          vehiculo.capacidad_carga = element.cargo_capacity;
+          vehiculo.consumibles = element.consumables;
+          vehiculo.clase_vehiculo = element.vehicle_class;
+          listaVehiculos.push(vehiculo);
+        });
+        res.send(listaVehiculos);
     });
 };
 
